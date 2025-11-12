@@ -15,6 +15,7 @@ const aiRoutes = require("./routes/aiRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const faqRoutes = require("./routes/faqRoutes");
+const discoverRoutes = require("./routes/discoverRoutes");
 
 // Connect to MongoDB
 (async () => {
@@ -51,6 +52,12 @@ const aiLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
   max: 10, // Limit each IP to 10 requests per window
   message: "Upgrade to the Pro version for more requests per hour.",
+});
+
+const discoverLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 100, // Limit each IP to 100 requests per window
+  message: "Too many requests. Please try again later.",
 });
 
 // CORS configuration with error handling
@@ -98,6 +105,7 @@ app.use("/api/ai", aiLimiter, aiRoutes);
 app.use("/api/chats", chatRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/faq", faqRoutes);
+app.use("/api/discover", discoverLimiter, discoverRoutes);
 
 // 404 handler
 app.use((req, res) => {

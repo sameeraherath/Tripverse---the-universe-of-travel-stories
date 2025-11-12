@@ -30,6 +30,7 @@ import {
   MdMenu,
   MdClose,
   MdMessage,
+  MdExplore,
 } from "react-icons/md";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -105,6 +106,7 @@ const Navbar = () => {
     { text: "Create Post", path: "/create", icon: <MdCreate /> },
     { text: "Bookmarks", path: "/bookmarks", icon: <MdBookmark /> },
     { text: "Messages", path: "/messages", icon: <MdMessage /> },
+    { text: "Discover", path: "/discover", icon: <MdExplore /> },
     {
       text: "Profile",
       path: "/profile",
@@ -240,7 +242,25 @@ const Navbar = () => {
                 </Badge>
               </IconButton>
             </Tooltip>
-
+            <Tooltip title="Discover" arrow placement="bottom">
+              <IconButton
+                onClick={() => navigate("/discover")}
+                sx={{
+                  color: isActive("/discover") ? "#FF7A1A" : "#444444",
+                  backgroundColor: isActive("/discover")
+                    ? "rgba(255, 122, 26, 0.1)"
+                    : "transparent",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    color: "#FF7A1A",
+                    backgroundColor: "rgba(255, 122, 26, 0.1)",
+                    transform: "translateY(-2px)",
+                  },
+                }}
+              >
+                <MdExplore style={{ fontSize: "28px" }} />
+              </IconButton>
+            </Tooltip>
 
             <Tooltip title="Profile" arrow placement="bottom">
               <IconButton

@@ -18,6 +18,7 @@ import Messages from "./pages/Messages";
 import LandingPage from "./pages/LandingPage";
 import ForYou from "./pages/ForYou";
 import AdminDashboard from "./pages/AdminDashboard";
+import Discover from "./pages/Discover";
 import FloatingActionButton from "./components/FloatingActionButton";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { SocketProvider } from "./contexts/SocketContext";
@@ -68,6 +69,7 @@ const AppContent = () => {
         <Route path="/profile/:userId" element={<UserProfile />} />
         <Route path="/bookmarks" element={<Bookmarks />} />
         <Route path="/messages" element={<Messages />} />
+        <Route path="/discover" element={<Discover />} />
         <Route path="/admin" element={
           <ProtectedRoute requiredRole="admin">
             <AdminDashboard />

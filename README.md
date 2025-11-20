@@ -279,6 +279,18 @@ client/src/
    # Hugging Face API (Fallback)
    HF_API_KEY=your_huggingface_api_key
    
+   # Discover API Keys (Required for Discover feature)
+   WEATHER_API_KEY=your_openweathermap_api_key
+   ATTRACTIONS_API_KEY=your_google_places_api_key
+   
+   # WSO2 API Manager Configuration (Optional - for enterprise API management)
+   WSO2_GATEWAY_URL=https://localhost:8243
+   WSO2_PUBLISHER_URL=https://localhost:9443
+   WSO2_USERNAME=admin
+   WSO2_PASSWORD=admin
+   WSO2_CLIENT_ID=your_wso2_client_id
+   WSO2_CLIENT_SECRET=your_wso2_client_secret
+   
    # Server Configuration
    PORT=5000
    NODE_ENV=development
@@ -296,6 +308,16 @@ client/src/
 5. **Access the Application**:
    - Frontend: http://localhost:5173
    - Backend API: http://localhost:5000
+
+6. **WSO2 API Manager Integration (Optional)**:
+   - See [WSO2 Integration Guide](docs/WSO2_INTEGRATION.md) for detailed setup
+   - Configure WSO2 environment variables in `client/.env`:
+     ```env
+     VITE_WSO2_GATEWAY_URL=https://localhost:8243/tripverse/discover/v1
+     VITE_WSO2_TOKEN_URL=https://localhost:9443/oauth2/token
+     VITE_WSO2_CLIENT_ID=your_client_id
+     VITE_WSO2_CLIENT_SECRET=your_client_secret
+     ```
 
 ## 📁 Project Structure
 
@@ -318,6 +340,11 @@ tripverse/
 │   ├── middleware/       # Custom middleware
 │   ├── utils/            # Utility functions
 │   └── config/           # Database configuration
+├── docs/                  # Documentation
+│   ├── WSO2_INTEGRATION.md  # WSO2 setup guide
+│   └── ARCHITECTURE.md      # System architecture overview
+├── wso2-mediation/        # WSO2 mediation sequences
+│   └── discover-aggregate-sequence.xml
 └── api_docs/             # API documentation
 ```
 
@@ -456,6 +483,14 @@ api_docs/
 - `GET /api/faq/categories` - Get FAQ categories
 - `POST /api/faq/chatbot` - Process chatbot query
 
+### Discover (Travel Info Aggregator)
+- `GET /api/discover/weather/:location` - Get weather information
+- `GET /api/discover/attractions/:location` - Get tourist attractions
+- `GET /api/discover/currency/:base` - Get currency exchange rates
+- `GET /api/discover/aggregate/:location` - Get aggregated travel info (authenticated)
+
+**Note**: When WSO2 API Manager is integrated, these endpoints are accessed through the WSO2 Gateway at `/tripverse/discover/v1/`
+
 ## 🤖 AI Story Correction
 
 Tripverse includes powerful AI assistance to help travelers write better stories:
@@ -488,6 +523,37 @@ The platform uses Socket.IO for real-time communication:
 - **Typing Indicators**: Show when travelers are typing
 - **Online Status**: Track traveler online/offline status
 - **Notifications**: Real-time notifications for travel story interactions
+
+## 🔌 WSO2 API Manager Integration
+
+Tripverse Discover supports integration with WSO2 API Manager for enterprise-level API management:
+
+### Features
+- **API Gateway**: Centralized entry point for all Discover API calls
+- **OAuth2 Authentication**: Secure token-based authentication
+- **Advanced Caching**: Better cache management than in-memory caching
+- **Throttling Policies**: Granular rate limiting (Bronze/Silver/Gold tiers)
+- **API Analytics**: Comprehensive usage tracking and monitoring
+- **Mediation Sequences**: Advanced response aggregation and transformation
+
+### Architecture
+With WSO2 integration, the architecture becomes:
+```
+Frontend → WSO2 Gateway → Express Backend → External APIs
+```
+
+### Setup
+1. Install and configure WSO2 API Manager (see [WSO2 Integration Guide](docs/WSO2_INTEGRATION.md))
+2. Create TripverseDiscover API in WSO2 Publisher
+3. Configure OAuth2 credentials
+4. Update environment variables in `client/.env` and `server/.env`
+5. All Discover API calls will route through WSO2 Gateway
+
+### Documentation
+- **Setup Guide**: [WSO2 Integration Guide](docs/WSO2_INTEGRATION.md)
+- **Architecture Overview**: [System Architecture](docs/ARCHITECTURE.md)
+
+**Note**: When WSO2 environment variables are configured, all Discover API calls route through WSO2 Gateway (Direct Replacement approach). Ensure WSO2 is running and properly configured before using the Discover feature.
 
 ## 🚀 Deployment
 

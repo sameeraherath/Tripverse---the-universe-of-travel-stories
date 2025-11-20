@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="discover-aggregate-sequence">
+    <!-- Log incoming request -->
+    <log level="full">
+        <property name="sequence" value="discover-aggregate"/>
+        <property name="location" expression="get-property('uri.var.location')"/>
+    </log>
+    
+    <!-- Extract location from path parameter -->
+    <property name="location" expression="get-property('uri.var.location')"/>
+    
+    <!-- Call Weather API -->
+    <call>
+        <endpoint>
+            <http uri-template="http://localhost:5000/api/discover/weather/{location}">
+                <timeout>
+                    <duration>5000</duration>
+                    <responseAction>fault</responseAction>
+                </timeout>
+            </http>
+        </endpoint>
+    </call>
+    <property name="weather" expression="json-eval($)"/>
+    
+    <!-- Call Attractions API -->
+    <call>
+        <endpoint>
+            <http uri-template="http://localhost:5000/api/discover/attractions/{location}">
+                <timeout>
+                    <duration>5000</duration>
+                    <responseAction>fault</responseAction>
+                </timeout>
+            </http>
+        </endpoint>
+    </call>
+    <property name="attractions" expression="json-eval($)"/>
+    
+    <!-- Call Currency API (default to USD) -->
+    <call>
+        <endpoint>
+            <http uri-template="http://localhost:5000/api/discover/currency/USD">
+                <timeout>
+                    <duration>5000</duration>
+                    <responseAction>fault</responseAction>
+                </timeout>
+            </http>
+        </endpoint>
+    </call>
+    <property name="currency" expression="json-eval($)"/>
+    
+    <!-- Aggregate all responses into single JSON -->
+    <payloadFactory media-type="json">
+        <format>
+            {
+                "location": "$1",
+                "timestamp": "$2",
+                "weather": $3,
+                "attractions": $4,
+                "currency": $5
+            }
+        </format>
+        <args>
+            <arg expression="get-property('location')"/>
+            <arg expression="get-property('SYSTEM_DATE', 'yyyy-MM-dd HH:mm:ss')"/>
+            <arg expression="get-property('weather')"/>
+            <arg expression="get-property('attractions')"/>
+            <arg expression="get-property('currency')"/>
+        </args>
+    </payloadFactory>
+    
+    <!-- Set response headers -->
+    <header name="Content-Type" value="application/json"/>
+    <property name="HTTP_SC" value="200" scope="axis2"/>
+    
+    <!-- Log response -->
+    <log level="full">
+        <property name="sequence" value="discover-aggregate-response"/>
+    </log>
+    
+    <respond/>
+</sequence>
+

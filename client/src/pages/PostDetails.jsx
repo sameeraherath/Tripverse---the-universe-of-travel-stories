@@ -21,6 +21,7 @@ import {
   Heart,
   MessageCircle,
   ArrowLeft,
+  Flag,
 } from "lucide-react";
 
 const PostDetails = () => {
@@ -33,6 +34,8 @@ const PostDetails = () => {
   const [authorProfile, setAuthorProfile] = useState(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showReportDialog, setShowReportDialog] = useState(false);
+  const [isReporting, setIsReporting] = useState(false);
   const dispatch = useDispatch();
   const { comments, isLoading: commentsLoading } = useSelector(
     (state) => state.comments
@@ -98,6 +101,34 @@ const PostDetails = () => {
 
   const handleDeleteCancel = () => {
     setShowDeleteDialog(false);
+  };
+
+  const handleReportClick = () => {
+    setShowReportDialog(true);
+  };
+
+  const handleReportCancel = () => {
+    setShowReportDialog(false);
+  };
+
+  const handleReportConfirm = async () => {
+    setIsReporting(true);
+    try {
+      // This endpoint doesn't exist yet.
+      // `POST /api/posts/:id/report` endpoint
+      await api.post(`/api/posts/${id}/report`, {
+        reason: "Wrong content",
+      });
+      toast.success(
+        "Post reported successfully. Our moderators will review it."
+      );
+    } catch (error) {
+      console.error("Error reporting post:", error);
+      toast.error(error.response?.data?.message || "Failed to report post.");
+    } finally {
+      setIsReporting(false);
+      setShowReportDialog(false);
+    }
   };
 
   const handleShare = async () => {
@@ -259,7 +290,19 @@ const PostDetails = () => {
                   </>
                 ) : (
                   post.author?._id && (
-                    <FollowButton userId={post.author._id} variant="compact" />
+                    <>
+                      <FollowButton
+                        userId={post.author._id}
+                        variant="compact"
+                      />
+                      <button
+                        onClick={handleReportClick}
+                        className="flex items-center gap-1 md:gap-2 px-2 md:px-4 py-2 bg-yellow-50 text-yellow-700 rounded-lg hover:bg-yellow-100 transition-colors font-medium text-xs md:text-sm"
+                      >
+                        <Flag className="w-3 h-3 md:w-4 md:h-4" />
+                        <span className="hidden sm:inline">Report</span>
+                      </button>
+                    </>
                   )
                 )}
                 <BookmarkButton postId={id} variant="icon-only" />
@@ -282,18 +325,24 @@ const PostDetails = () => {
             <div className="flex items-center gap-4 md:gap-6 mb-6 md:mb-8 pb-6 md:pb-8 border-b border-gray-100">
               <div className="flex items-center gap-2 text-gray-600">
                 <Heart className="w-4 h-4 md:w-5 md:h-5" />
-                <span className="font-medium text-sm md:text-base">{post.likeCount || 0} likes</span>
+                <span className="font-medium text-sm md:text-base">
+                  {post.likeCount || 0} likes
+                </span>
               </div>
               <div className="flex items-center gap-2 text-gray-600">
                 <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
-                <span className="font-medium text-sm md:text-base">{comments.length} comments</span>
+                <span className="font-medium text-sm md:text-base">
+                  {comments.length} comments
+                </span>
               </div>
             </div>
 
             {/* Tags */}
             {post.tags && post.tags.length > 0 && (
               <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-4 md:mb-6 pb-4 md:pb-6 border-b border-gray-100">
-                <span className="text-xs md:text-sm font-medium text-gray-500">Tags:</span>
+                <span className="text-xs md:text-sm font-medium text-gray-500">
+                  Tags:
+                </span>
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
@@ -356,6 +405,18 @@ const PostDetails = () => {
         confirmText="Delete Post"
         cancelText="Cancel"
         isLoading={isDeleting}
+      />
+
+      {/* Report Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={showReportDialog}
+        onClose={handleReportCancel}
+        onConfirm={handleReportConfirm}
+        title="Report Post"
+        message="Are you sure you want to report this post for inappropriate content? This will submit it for review by our moderation team."
+        confirmText="Report"
+        cancelText="Cancel"
+        isLoading={isReporting}
       />
     </div>
   );

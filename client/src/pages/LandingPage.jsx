@@ -135,7 +135,6 @@ const LandingPage = () => {
                 borderRadius: { xs: 2, sm: 3, md: 4 },
                 position: "relative",
                 overflow: "hidden",
-                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                 mx: { xs: "auto", md: 0 },
                 maxWidth: { xs: "100%", sm: "500px", md: "100%" },
               }}

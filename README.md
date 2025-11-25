@@ -7,7 +7,6 @@ Welcome to **Tripverse**, a comprehensive travel storytelling and community plat
 
 ## 📋 Table of Contents
 
-- [Demo Video](#demo-video)
 - [Key Features](#key-features)
   - [AI-Powered Features](#ai-powered-features)
   - [Travel Community Features](#travel-community-features)

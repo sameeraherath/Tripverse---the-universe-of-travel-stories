@@ -1,14 +1,24 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+// eslint-disable-next-line no-unused-vars
 import discoverApi from "../utils/discoverApi";
-import { Loader2, MapPin, Cloud, Star, DollarSign, AlertCircle } from "lucide-react";
+import {
+  Loader2,
+  MapPin,
+  Cloud,
+  Star,
+  DollarSign,
+  AlertCircle,
+} from "lucide-react";
 import { toast } from "react-toastify";
 
 const Discover = () => {
   const navigate = useNavigate();
   const [location, setLocation] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [data, setData] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
   const { token } = useSelector((state) => state.auth);
 
@@ -24,20 +34,31 @@ const Discover = () => {
       return;
     }
 
-    setLoading(true);
-    try {
-      const result = await discoverApi.getAggregatedInfo(location.trim());
-      setData(result);
-      toast.success(`Travel information for ${location} loaded successfully!`);
-    } catch (error) {
-      console.error("Error fetching travel info:", error);
-      toast.error(
-        error.response?.data?.message || "Failed to fetch travel information"
-      );
-      setData(null);
-    } finally {
-      setLoading(false);
-    }
+    // Show coming soon message
+    toast.info(
+      "This feature is coming soon! Stay tuned for exciting travel insights.",
+      {
+        position: "top-center",
+        autoClose: 3000,
+      }
+    );
+    return;
+
+    // Original code below (commented out for future use)
+    // setLoading(true);
+    // try {
+    //   const result = await discoverApi.getAggregatedInfo(location.trim());
+    //   setData(result);
+    //   toast.success(`Travel information for ${location} loaded successfully!`);
+    // } catch (error) {
+    //   console.error("Error fetching travel info:", error);
+    //   toast.error(
+    //     error.response?.data?.message || "Failed to fetch travel information"
+    //   );
+    //   setData(null);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   const handleKeyPress = (e) => {
@@ -59,7 +80,8 @@ const Discover = () => {
             Explore Your Destination
           </h1>
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            Get comprehensive travel information including weather, attractions, and currency rates
+            Get comprehensive travel information including weather, attractions,
+            and currency rates
           </p>
         </div>
 
@@ -163,11 +185,17 @@ const Discover = () => {
               <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow duration-300">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-3 bg-green-100 rounded-full">
-                    <Star className="w-6 h-6 text-green-600" fill="currentColor" />
+                    <Star
+                      className="w-6 h-6 text-green-600"
+                      fill="currentColor"
+                    />
                   </div>
-                  <h2 className="text-2xl font-bold text-gray-dark">Top Attractions</h2>
+                  <h2 className="text-2xl font-bold text-gray-dark">
+                    Top Attractions
+                  </h2>
                 </div>
-                {data.attractions.attractions && data.attractions.attractions.length > 0 ? (
+                {data.attractions.attractions &&
+                data.attractions.attractions.length > 0 ? (
                   <div className="space-y-3 max-h-96 overflow-y-auto">
                     {data.attractions.attractions.map((attraction, idx) => (
                       <div
@@ -179,7 +207,10 @@ const Discover = () => {
                         </div>
                         {attraction.rating && (
                           <div className="flex items-center gap-1 text-sm text-gray-600">
-                            <Star className="w-4 h-4 text-yellow-500" fill="currentColor" />
+                            <Star
+                              className="w-4 h-4 text-yellow-500"
+                              fill="currentColor"
+                            />
                             <span>{attraction.rating}</span>
                             {attraction.userRatingsTotal && (
                               <span className="text-gray-500">
@@ -212,7 +243,9 @@ const Discover = () => {
                   <div className="p-3 bg-yellow-100 rounded-full">
                     <DollarSign className="w-6 h-6 text-yellow-600" />
                   </div>
-                  <h2 className="text-2xl font-bold text-gray-dark">Currency Exchange</h2>
+                  <h2 className="text-2xl font-bold text-gray-dark">
+                    Currency Exchange
+                  </h2>
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -237,7 +270,15 @@ const Discover = () => {
                       <div className="space-y-2 max-h-64 overflow-y-auto">
                         {Object.entries(data.currency.rates)
                           .filter(([key]) =>
-                            ["EUR", "GBP", "JPY", "CAD", "AUD", "INR", "CNY"].includes(key)
+                            [
+                              "EUR",
+                              "GBP",
+                              "JPY",
+                              "CAD",
+                              "AUD",
+                              "INR",
+                              "CNY",
+                            ].includes(key)
                           )
                           .slice(0, 7)
                           .map(([currency, rate]) => (
@@ -245,8 +286,12 @@ const Discover = () => {
                               key={currency}
                               className="flex items-center justify-between p-2 bg-gray-50 rounded-lg"
                             >
-                              <span className="font-medium text-gray-dark">{currency}</span>
-                              <span className="text-gray-600">{rate.toFixed(4)}</span>
+                              <span className="font-medium text-gray-dark">
+                                {currency}
+                              </span>
+                              <span className="text-gray-600">
+                                {rate.toFixed(4)}
+                              </span>
                             </div>
                           ))}
                       </div>
@@ -261,7 +306,9 @@ const Discover = () => {
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-yellow-800">
                 <div className="flex items-center gap-2">
                   <AlertCircle className="w-5 h-5" />
-                  <span className="font-semibold">Weather data unavailable</span>
+                  <span className="font-semibold">
+                    Weather data unavailable
+                  </span>
                 </div>
               </div>
             )}
@@ -269,7 +316,9 @@ const Discover = () => {
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-yellow-800">
                 <div className="flex items-center gap-2">
                   <AlertCircle className="w-5 h-5" />
-                  <span className="font-semibold">Attractions data unavailable</span>
+                  <span className="font-semibold">
+                    Attractions data unavailable
+                  </span>
                 </div>
               </div>
             )}
@@ -277,7 +326,9 @@ const Discover = () => {
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-yellow-800">
                 <div className="flex items-center gap-2">
                   <AlertCircle className="w-5 h-5" />
-                  <span className="font-semibold">Currency data unavailable</span>
+                  <span className="font-semibold">
+                    Currency data unavailable
+                  </span>
                 </div>
               </div>
             )}
@@ -292,8 +343,9 @@ const Discover = () => {
               Discover Travel Information
             </h3>
             <p className="text-gray-medium mb-6 max-w-md mx-auto">
-              Enter a location above to get comprehensive travel information including
-              weather conditions, popular attractions, and currency exchange rates.
+              Enter a location above to get comprehensive travel information
+              including weather conditions, popular attractions, and currency
+              exchange rates.
             </p>
           </div>
         )}
@@ -303,4 +355,3 @@ const Discover = () => {
 };
 
 export default Discover;
-

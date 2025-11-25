@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import RichTextEditor from "./RichTextEditor";
@@ -13,6 +13,53 @@ const PostForm = ({ onSubmit, initialData }) => {
   const [existingImages, setExistingImages] = useState(
     initialData?.images || []
   );
+
+  // Sync incoming initialData (useful when it is loaded async in Edit page)
+  useEffect(() => {
+    if (!initialData) return;
+    setTitle(initialData.title || "");
+    setContent(initialData.content || "");
+
+    // Normalize tags: ensure an array of strings
+    const normalizeTags = (t) => {
+      if (!t) return [];
+      if (Array.isArray(t)) return t;
+      if (typeof t === "string") {
+        try {
+          const parsed = JSON.parse(t);
+          if (Array.isArray(parsed)) return parsed;
+          // eslint-disable-next-line no-unused-vars
+        } catch (_) {
+          // fallback to comma-separated list
+          return t
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean);
+        }
+      }
+      return [];
+    };
+
+    setTags(normalizeTags(initialData.tags));
+
+    // Normalize existing images: array or JSON string
+    const normalizeImages = (imgs) => {
+      if (!imgs) return [];
+      if (Array.isArray(imgs)) return imgs;
+      if (typeof imgs === "string") {
+        try {
+          const parsed = JSON.parse(imgs);
+          if (Array.isArray(parsed)) return parsed;
+          // eslint-disable-next-line no-unused-vars
+        } catch (_) {
+          return [];
+        }
+      }
+      return [];
+    };
+
+    setExistingImages(normalizeImages(initialData.images));
+  }, [initialData]);
   const [loading, setLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
 
@@ -37,16 +84,16 @@ const PostForm = ({ onSubmit, initialData }) => {
           },
         }
       );
-      
+
       if (response.data.content) {
         setContent(response.data.content);
       }
-      
+
       if (response.data.warning) {
         console.warn("AI grammar check warning:", response.data.warning);
         // You could show a toast notification here if you have a toast system
       }
-      
+
       if (response.data.error) {
         console.warn("AI grammar check error:", response.data.error);
         alert(response.data.error);
@@ -81,13 +128,13 @@ const PostForm = ({ onSubmit, initialData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Basic validation
     if (!title.trim()) {
       alert("Please enter a title for your post");
       return;
     }
-    
+
     if (!content.trim()) {
       alert("Please enter some content for your post");
       return;
@@ -166,9 +213,10 @@ const PostForm = ({ onSubmit, initialData }) => {
         {/* Images Section */}
         <div className="space-y-3">
           <label className="block text-sm font-semibold text-gray-800">
-            Images <span className="text-gray-500 font-normal">(Maximum 3)</span>
+            Images{" "}
+            <span className="text-gray-500 font-normal">(Maximum 3)</span>
           </label>
-          
+
           <div className="bg-gray-50 rounded-xl p-4 space-y-4">
             {/* Display existing images */}
             {existingImages.length > 0 && (
@@ -226,14 +274,29 @@ const PostForm = ({ onSubmit, initialData }) => {
                 />
                 <div className="space-y-2 pointer-events-none">
                   <div className="text-gray-400">
-                    <svg className="mx-auto h-12 w-12" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg
+                      className="mx-auto h-12 w-12"
+                      stroke="currentColor"
+                      fill="none"
+                      viewBox="0 0 48 48"
+                    >
+                      <path
+                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </div>
                   <p className="text-sm text-gray-600">
-                    <span className="font-medium text-primary">Click to upload</span> or drag and drop
+                    <span className="font-medium text-primary">
+                      Click to upload
+                    </span>{" "}
+                    or drag and drop
                   </p>
-                  <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB each</p>
+                  <p className="text-xs text-gray-500">
+                    PNG, JPG, GIF up to 10MB each
+                  </p>
                 </div>
               </div>
             )}

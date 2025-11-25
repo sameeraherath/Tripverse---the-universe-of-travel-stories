@@ -1,4 +1,5 @@
 import { useEditor, EditorContent } from "@tiptap/react";
+import { useEffect } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import Link from "@tiptap/extension-link";
@@ -42,6 +43,21 @@ const RichTextEditor = ({ content, onChange, placeholder }) => {
       },
     },
   });
+
+  // Update editor content when `content` prop changes (handles async loads)
+  useEffect(() => {
+    if (!editor) return;
+    const current = editor.getHTML();
+    const incoming = content || "";
+    if (incoming !== current) {
+      // Use setContent to update editor without triggering selection resets
+      try {
+        editor.commands.setContent(incoming);
+      } catch (err) {
+        console.warn("Failed to set editor content:", err);
+      }
+    }
+  }, [editor, content]);
 
   return (
     <div className="border border-gray-200 rounded-xl overflow-hidden bg-white">

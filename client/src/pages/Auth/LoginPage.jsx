@@ -11,24 +11,55 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading} = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.auth);
+
+  // Validation helper
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Email validation
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    // Password validation
+    if (!password) {
+      newErrors.password = "Password is required";
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    // Validate before submitting
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       const result = await dispatch(loginUser({ email, password }));
-      
+
       if (loginUser.fulfilled.match(result)) {
         toast.success("🎉 Login successful! Redirecting...", {
           autoClose: 2000,
         });
-        
+
         // Redirect based on user role
         setTimeout(() => {
-          if (result.payload.role === 'admin' || result.payload.role === 'superadmin') {
+          if (
+            result.payload.role === "admin" ||
+            result.payload.role === "superadmin"
+          ) {
             navigate("/admin");
           } else {
             navigate("/home");
@@ -36,7 +67,8 @@ const LoginPage = () => {
         }, 2000);
       } else if (loginUser.rejected.match(result)) {
         // Show specific error message from server
-        const errorMessage = result.payload?.message || "Invalid email or password";
+        const errorMessage =
+          result.payload?.message || "Invalid email or password";
         toast.error(errorMessage, {
           autoClose: 4000,
         });
@@ -70,7 +102,8 @@ const LoginPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
           >
-            🌍 Join Fellow Travelers. Document Your Journey, Discover New Places!
+            🌍 Join Fellow Travelers. Document Your Journey, Discover New
+            Places!
           </motion.p>
 
           <motion.div
@@ -115,10 +148,20 @@ const LoginPage = () => {
                 id="email"
                 placeholder="Enter your email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-[#FFF9F3] border border-[#F3F4F6] px-4 py-4 text-[#111] focus:outline-none focus:ring-2 focus:ring-[#FF7A1A]/20 rounded-xl transition-all"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (errors.email) setErrors({ ...errors, email: "" });
+                }}
+                className={`w-full bg-[#FFF9F3] border px-4 py-4 text-[#111] focus:outline-none focus:ring-2 rounded-xl transition-all ${
+                  errors.email
+                    ? "border-red-500 focus:ring-red-500/20"
+                    : "border-[#F3F4F6] focus:ring-[#FF7A1A]/20"
+                }`}
                 required
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
             </div>
 
             <div className="space-y-4">
@@ -134,8 +177,15 @@ const LoginPage = () => {
                   id="password"
                   placeholder="Enter your password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-[#FFF9F3] border border-[#F3F4F6] px-4 py-4 text-[#111] focus:outline-none focus:ring-2 focus:ring-[#FF7A1A]/20 rounded-xl transition-all"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (errors.password) setErrors({ ...errors, password: "" });
+                  }}
+                  className={`w-full bg-[#FFF9F3] border px-4 py-4 text-[#111] focus:outline-none focus:ring-2 rounded-xl transition-all ${
+                    errors.password
+                      ? "border-red-500 focus:ring-red-500/20"
+                      : "border-[#F3F4F6] focus:ring-[#FF7A1A]/20"
+                  }`}
                   required
                 />
                 <button
@@ -150,6 +200,9 @@ const LoginPage = () => {
                   )}
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-red-500 text-sm">{errors.password}</p>
+              )}
             </div>
 
             <button

@@ -12,20 +12,43 @@ const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  // Validation helper
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Email validation
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    // Password validation
+    if (!password) {
+      newErrors.password = "Password is required";
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    // Confirm password validation
+    if (!confirmPassword) {
+      newErrors.confirmPassword = "Please confirm your password";
+    } else if (password !== confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate passwords match
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
-
-    // Validate password length
-    if (password.length < 6) {
-      toast.error("Password must be at least 6 characters long");
+    // Validate before submitting
+    if (!validateForm()) {
       return;
     }
 
@@ -126,10 +149,20 @@ const SignUpPage = () => {
                 id="email"
                 placeholder="Enter your email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-[#FFF9F3] border border-[#F3F4F6] px-4 py-4 text-[#111] focus:outline-none focus:ring-2 focus:ring-[#FF7A1A]/20 rounded-xl transition-all"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (errors.email) setErrors({ ...errors, email: "" });
+                }}
+                className={`w-full bg-[#FFF9F3] border px-4 py-4 text-[#111] focus:outline-none focus:ring-2 rounded-xl transition-all ${
+                  errors.email
+                    ? "border-red-500 focus:ring-red-500/20"
+                    : "border-[#F3F4F6] focus:ring-[#FF7A1A]/20"
+                }`}
                 required
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
             </div>
 
             <div className="space-y-4">
@@ -145,8 +178,15 @@ const SignUpPage = () => {
                   id="password"
                   placeholder="Create a password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-[#FFF9F3] border border-[#F3F4F6] px-4 py-4 text-[#111] focus:outline-none focus:ring-2 focus:ring-[#FF7A1A]/20 rounded-xl transition-all"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (errors.password) setErrors({ ...errors, password: "" });
+                  }}
+                  className={`w-full bg-[#FFF9F3] border px-4 py-4 text-[#111] focus:outline-none focus:ring-2 rounded-xl transition-all ${
+                    errors.password
+                      ? "border-red-500 focus:ring-red-500/20"
+                      : "border-[#F3F4F6] focus:ring-[#FF7A1A]/20"
+                  }`}
                   required
                 />
                 <button
@@ -161,9 +201,13 @@ const SignUpPage = () => {
                   )}
                 </button>
               </div>
-              <p className="text-sm text-gray-500">
-                Must be at least 6 characters long
-              </p>
+              {errors.password ? (
+                <p className="text-red-500 text-sm">{errors.password}</p>
+              ) : (
+                <p className="text-sm text-gray-500">
+                  Must be at least 6 characters long
+                </p>
+              )}
             </div>
 
             <div className="space-y-4">
@@ -179,8 +223,16 @@ const SignUpPage = () => {
                   id="confirmPassword"
                   placeholder="Confirm your password"
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full bg-[#FFF9F3] border border-[#F3F4F6] px-4 py-4 text-[#111] focus:outline-none focus:ring-2 focus:ring-[#FF7A1A]/20 rounded-xl transition-all"
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    if (errors.confirmPassword)
+                      setErrors({ ...errors, confirmPassword: "" });
+                  }}
+                  className={`w-full bg-[#FFF9F3] border px-4 py-4 text-[#111] focus:outline-none focus:ring-2 rounded-xl transition-all ${
+                    errors.confirmPassword
+                      ? "border-red-500 focus:ring-red-500/20"
+                      : "border-[#F3F4F6] focus:ring-[#FF7A1A]/20"
+                  }`}
                   required
                 />
                 <button
@@ -195,6 +247,9 @@ const SignUpPage = () => {
                   )}
                 </button>
               </div>
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+              )}
             </div>
 
             <button

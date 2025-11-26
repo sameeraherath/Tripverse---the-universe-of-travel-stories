@@ -1,41 +1,40 @@
-# Tripverse - Travel Community Platform
+# 🌍 Tripverse — for travelers, by travelers.
 
-🌍 **Tripverse — for travelers, by travelers.**  
 An open-source community platform for those who love to explore, share experiences, and connect through travel.
 
 Welcome to **Tripverse**, a comprehensive travel storytelling and community platform designed to help travelers create, edit, and publish their adventure stories while building connections with fellow explorers. This project features a **React-based frontend** with **Redux state management** and a **Node.js/Express backend** with **Socket.IO real-time communication**, providing a seamless and interactive travel community experience.
 
-## 📋 Table of Contents
+## Table of Contents
 
-- [✨ Key Features](#key-features)
-  - [🤖 AI-Powered Features](#ai-powered-features)
-  - [👥 Travel Community Features](#travel-community-features)
-  - [📝 Travel Content Management](#travel-content-management)
-  - [🎯 Personalized Travel Experience](#personalized-travel-experience)
-  - [🛡️ Admin Features](#admin-features)
-- [🔐 Admin Portal](#admin-portal)
-  - [🚪 Access Control](#access-control)
-  - [📊 Admin Dashboard Features](#admin-dashboard-features)
-  - [👥 User Management](#user-management)
-  - [🔧 Technical Implementation](#technical-implementation)
-  - [🛡️ Security Features](#security-features)
-  - [📈 Analytics & Monitoring](#analytics--monitoring)
-  - [🚀 Getting Started with Admin Portal](#getting-started-with-admin-portal)
-  - [🔒 Security Best Practices](#security-best-practices)
-- [🛠️ Technologies Used](#technologies-used)
+- [Key Features](#key-features)
+  - [AI-Powered Features](#ai-powered-features)
+  - [Travel Community Features](#travel-community-features)
+  - [Travel Content Management](#travel-content-management)
+  - [Personalized Travel Experience](#personalized-travel-experience)
+  - [Admin Features](#admin-features)
+- [Admin Portal](#admin-portal)
+  - [Access Control](#access-control)
+  - [Admin Dashboard Features](#admin-dashboard-features)
+  - [User Management](#user-management)
+  - [Technical Implementation](#technical-implementation)
+  - [Security Features](#security-features)
+  - [Analytics & Monitoring](#analytics--monitoring)
+  - [Getting Started with Admin Portal](#getting-started-with-admin-portal)
+  - [Security Best Practices](#security-best-practices)
+- [Technologies Used](#technologies-used)
   - [Frontend Stack](#frontend-stack)
   - [Backend Stack](#backend-stack)
-- [🚀 Getting Started](#getting-started)
+- [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
-  - [📦 Installation](#installation)
-- [📁 Project Structure](#project-structure)
-- [📚 API Documentation](#api-documentation)
-  - [📄 OpenAPI Specification](#openapi-specification)
-  - [🔗 API Documentation Features](#api-documentation-features)
-  - [🛠️ Using the API Documentation](#using-the-api-documentation)
-  - [📋 API Documentation Structure](#api-documentation-structure)
-  - [🔧 API Documentation Maintenance](#api-documentation-maintenance)
-- [🔌 API Endpoints](#api-endpoints)
+  - [Installation](#installation)
+- [Project Structure](#project-structure)
+- [API Documentation](#api-documentation)
+  - [OpenAPI Specification](#openapi-specification)
+  - [API Documentation Features](#api-documentation-features)
+  - [Using the API Documentation](#using-the-api-documentation)
+  - [API Documentation Structure](#api-documentation-structure)
+  - [API Documentation Maintenance](#api-documentation-maintenance)
+- [API Endpoints](#api-endpoints)
   - [Authentication](#authentication)
   - [Posts](#posts)
   - [Profiles](#profiles)
@@ -45,62 +44,62 @@ Welcome to **Tripverse**, a comprehensive travel storytelling and community plat
   - [Admin](#admin)
   - [FAQ](#faq)
   - [Discover (Travel Info Aggregator)](#discover-travel-info-aggregator)
-- [🤖 AI Story Correction](#ai-story-correction)
+- [AI Story Correction](#ai-story-correction)
   - [How It Works](#how-it-works)
-- [🔒 Authentication](#authentication-1)
-- [📊 Real-time Features](#real-time-features)
-- [🔌 WSO2 API Manager Integration](#wso2-api-manager-integration)
+- [Authentication](#authentication-1)
+- [Real-time Features](#real-time-features)
+- [WSO2 API Manager Integration](#wso2-api-manager-integration)
   - [Features](#features)
   - [Architecture](#architecture)
   - [Setup](#setup)
   - [Documentation](#documentation)
-- [🚀 Deployment](#deployment)
+- [Deployment](#deployment)
   - [Frontend (Vercel)](#frontend-vercel)
   - [Backend (Railway/Heroku)](#backend-railwayheroku)
-- [🤝 Contributing](#contributing)
+- [Contributing](#contributing)
   - [Quick Start](#quick-start)
   - [Detailed Guidelines](#detailed-guidelines)
-- [📄 License](#license)
-- [👨‍💻 Author](#author)
+- [License](#license)
+- [Author](#author)
 
 
-## ✨ Key Features
+## Key Features
 
-### 🤖 AI-Powered Features
+### AI-Powered Features
 - **Smart Story Correction**: AI-powered grammar, spelling, and mistake correction using OpenAI GPT-3.5-turbo
 - **Travel Story Enhancement**: Improve travel story writing quality with intelligent suggestions and corrections
 - **Fallback Systems**: Multiple AI providers (OpenAI, Hugging Face) for reliable mistake detection and correction
 
-### 👥 Travel Community Features
+### Travel Community Features
 - **Traveler Profiles**: Customizable profiles with avatars, names, and travel bios
 - **Follow System**: Follow/unfollow fellow travelers and see their adventures in your feed
 - **Real-time Chat**: Direct messaging between travelers for trip planning and sharing
 - **Notifications**: Real-time notifications for likes, comments, and travel connections
 - **Bookmarking**: Save inspiring travel stories and itineraries for later reference
 
-### 📝 Travel Content Management
+### Travel Content Management
 - **Rich Text Editor**: Advanced editor with TipTap for formatting travel stories
 - **Image Uploads**: Multiple image support (up to 3 per post) using Cloudinary for travel photos
 - **Tags System**: Organize content with travel-related tags and discoverability
 - **CRUD Operations**: Create, read, update, and delete travel stories and experiences
 - **Search & Filter**: Advanced search with tag filtering and pagination for travel content
 
-### 🎯 Personalized Travel Experience
+### Personalized Travel Experience
 - **For You Feed**: Personalized content feed based on following and travel interactions
 - **Trending Posts**: Discover popular travel content and destinations across the platform
 - **Travel Analytics**: Track engagement and performance of your travel stories
 
-### 🛡️ Admin Features
+### Admin Features
 - **Admin Dashboard**: Comprehensive analytics and traveler management
 - **User Management**: Role-based access control (traveler, admin, superadmin)
 - **Content Moderation**: Monitor and manage travel stories and community
 - **Analytics**: Detailed statistics and growth metrics for the travel community
 
-## 🔐 Admin Portal
+## Admin Portal
 
 The Tripverse Admin Portal provides comprehensive administrative capabilities for managing the travel community platform. Access is restricted to users with `admin` or `superadmin` roles.
 
-### 🚪 Access Control
+### Access Control
 
 #### User Roles
 - **`user`** (default): Regular travelers with standard platform access
@@ -113,7 +112,7 @@ The Tripverse Admin Portal provides comprehensive administrative capabilities fo
 3. **Route Protection**: Frontend routes protected by `ProtectedRoute` component
 4. **API Protection**: Backend routes protected by `adminAuth` and `superAdminAuth` middleware
 
-### 📊 Admin Dashboard Features
+### Admin Dashboard Features
 
 #### Dashboard Analytics
 - **User Statistics**: Total users, growth percentage, monthly trends
@@ -128,7 +127,7 @@ The Tripverse Admin Portal provides comprehensive administrative capabilities fo
 - **Doughnut Charts**: Content type distribution
 - **Real-time Stats**: Live updates of platform metrics
 
-### 👥 User Management
+### User Management
 
 #### User Overview
 - **User List**: Paginated table of all platform users
@@ -141,7 +140,7 @@ The Tripverse Admin Portal provides comprehensive administrative capabilities fo
 - **Account Status**: Enable/disable user accounts
 - **Self-Protection**: Superadmins cannot demote themselves
 
-### 🔧 Technical Implementation
+### Technical Implementation
 
 #### Backend Architecture
 ```
@@ -165,7 +164,7 @@ client/src/
 - `GET /api/admin/users` - User management (admin+)
 - `PUT /api/admin/users/:id/role` - Role updates (superadmin only)
 
-### 🛡️ Security Features
+### Security Features
 
 #### Authentication Middleware
 - **JWT Verification**: Token validation for all admin routes
@@ -178,7 +177,7 @@ client/src/
 - **Role Validation**: Client-side role checking before rendering
 - **Access Denied**: Graceful error handling for unauthorized access
 
-### 📈 Analytics & Monitoring
+### Analytics & Monitoring
 
 #### Dashboard Metrics
 - **Total Users**: Active user count with growth percentage
@@ -192,7 +191,7 @@ client/src/
 - **Export Options**: Data export for external analysis
 - **Historical Data**: 6-month trend analysis
 
-### 🚀 Getting Started with Admin Portal
+### Getting Started with Admin Portal
 
 #### Prerequisites
 1. **Admin Account**: User account with `admin` or `superadmin` role
@@ -210,7 +209,7 @@ client/src/
 3. **Dashboard**: View analytics and user management
 4. **Manage**: Update user roles and account status
 
-### 🔒 Security Best Practices
+### Security Best Practices
 
 #### Role Management
 - **Principle of Least Privilege**: Grant minimum required permissions
@@ -224,7 +223,7 @@ client/src/
 - **IP Restrictions**: Consider IP-based access controls
 - **Audit Logging**: Log all administrative actions
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 ### Frontend Stack
 - **React 18**: Modern UI library with hooks and concurrent features
@@ -253,7 +252,7 @@ client/src/
 - **Multer**: File upload handling
 - **Express Rate Limit**: API rate limiting and protection
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -262,7 +261,7 @@ client/src/
 - **Cloudinary Account**: For image uploads and management
 - **OpenAI API Key**: For AI-powered features (optional but recommended)
 
-### 📦 Installation
+### Installation
 
 1. **Clone the Repository**:
    ```bash
@@ -342,7 +341,7 @@ client/src/
      VITE_WSO2_CLIENT_SECRET=your_client_secret
      ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 tripverse/
@@ -371,18 +370,18 @@ tripverse/
 └── api_docs/             # API documentation
 ```
 
-## 📚 API Documentation
+## API Documentation
 
 The Tripverse API is fully documented using OpenAPI 3.0.3 specification. The complete API documentation is available in the `api_docs/` folder.
 
-### 📄 OpenAPI Specification
+### OpenAPI Specification
 
 - **File**: `api_docs/openapi.yaml`
 - **Format**: OpenAPI 3.0.3 (Swagger)
 - **Size**: 2,278 lines of comprehensive documentation
 - **Coverage**: All endpoints, schemas, and authentication methods
 
-### 🔗 API Documentation Features
+### API Documentation Features
 
 #### Complete Endpoint Coverage
 - **Authentication**: Registration, login, and token management
@@ -405,7 +404,7 @@ The Tripverse API is fully documented using OpenAPI 3.0.3 specification. The com
 - **Production**: `https://tripverse-api.herokuapp.com/api`
 - **Base Path**: `/api` for all endpoints
 
-### 🛠️ Using the API Documentation
+### Using the API Documentation
 
 #### Viewing the Documentation
 1. **OpenAPI Tools**: Use Swagger UI, Postman, or Insomnia to view the spec
@@ -422,7 +421,7 @@ The Tripverse API is fully documented using OpenAPI 3.0.3 specification. The com
 2. **Validation**: Use the schemas for request/response validation
 3. **Documentation**: Keep the spec updated as you add new features
 
-### 📋 API Documentation Structure
+### API Documentation Structure
 
 ```
 api_docs/
@@ -434,7 +433,7 @@ api_docs/
     └── Security           # JWT authentication specifications
 ```
 
-### 🔧 API Documentation Maintenance
+### API Documentation Maintenance
 
 #### Keeping Documentation Updated
 - **Version Control**: The OpenAPI spec is version controlled with the codebase
@@ -447,7 +446,7 @@ api_docs/
 3. **Descriptions**: Provide clear descriptions for all parameters and responses
 4. **Testing**: Verify documentation accuracy through API testing
 
-## 🔌 API Endpoints
+## API Endpoints
 
 ### Authentication
 - `POST /api/auth/register` - Register new user
@@ -514,7 +513,7 @@ api_docs/
 
 **Note**: When WSO2 API Manager is integrated, these endpoints are accessed through the WSO2 Gateway at `/tripverse/discover/v1/`
 
-## 🤖 AI Story Correction
+## AI Story Correction
 
 Tripverse includes powerful AI assistance to help travelers write better stories:
 
@@ -530,7 +529,7 @@ Tripverse includes powerful AI assistance to help travelers write better stories
 3. Get instant suggestions for grammar, spelling, and style improvements
 4. Accept or reject changes to maintain your authentic travel voice
 
-## 🔒 Authentication
+## Authentication
 
 The API uses JWT (JSON Web Tokens) for authentication. Include the token in the Authorization header:
 
@@ -538,7 +537,7 @@ The API uses JWT (JSON Web Tokens) for authentication. Include the token in the 
 Authorization: Bearer <your_jwt_token>
 ```
 
-## 📊 Real-time Features
+## Real-time Features
 
 The platform uses Socket.IO for real-time communication:
 
@@ -547,7 +546,7 @@ The platform uses Socket.IO for real-time communication:
 - **Online Status**: Track traveler online/offline status
 - **Notifications**: Real-time notifications for travel story interactions
 
-## 🔌 WSO2 API Manager Integration
+## WSO2 API Manager Integration
 
 Tripverse Discover supports integration with WSO2 API Manager for enterprise-level API management:
 
@@ -578,7 +577,7 @@ Frontend → WSO2 Gateway → Express Backend → External APIs
 
 **Note**: When WSO2 environment variables are configured, all Discover API calls route through WSO2 Gateway (Direct Replacement approach). Ensure WSO2 is running and properly configured before using the Discover feature.
 
-## 🚀 Deployment
+## Deployment
 
 ### Frontend (Vercel)
 1. Connect your GitHub repository to Vercel
@@ -591,7 +590,7 @@ Frontend → WSO2 Gateway → Express Backend → External APIs
 2. Ensure MongoDB connection string is configured
 3. Deploy with Node.js buildpack
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions to Tripverse! This project is open source and thrives on community participation. Whether you're fixing bugs, adding features, or improving documentation, your contributions help make Tripverse better for all travelers.
 
@@ -605,13 +604,13 @@ We welcome contributions to Tripverse! This project is open source and thrives o
 ### Detailed Guidelines
 For comprehensive contribution guidelines, setup instructions, and community standards, please see our **[CONTRIBUTING.md](CONTRIBUTING.md)** file.
 
-**Happy coding and safe travels! 🌍✈️**
+**Happy coding and safe travels!**
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👨‍💻 Author
+## Author
 
 **Sameera Herath**
 - GitHub: [@sameeraherath](https://github.com/sameeraherath)

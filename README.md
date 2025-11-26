@@ -593,9 +593,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - GitHub: [@sameeraherath](https://github.com/sameeraherath)
 - LinkedIn: [Sameera Herath](https://linkedin.com/in/sameeraherath)
 
-## 🙏 Acknowledgments
 
-- OpenAI for AI-powered content enhancement
-- Cloudinary for image management services
-- MongoDB for database services
-- All contributors and users of the platform

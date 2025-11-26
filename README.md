@@ -36,9 +36,6 @@ Welcome to **Tripverse**, a comprehensive travel storytelling and community plat
 - [Author](#author)
 - [Acknowledgments](#acknowledgments)
 
-## 🎥 Demo Video
-
-Watch the platform in action: [Tripverse Platform Demo](https://youtu.be/iT4rAaV9MhU?si=0sUBL6oLZnKGsrZH)
 
 ## ✨ Key Features
 

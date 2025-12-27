@@ -186,63 +186,6 @@ html {
   @apply p-6 focus:outline-none min-h-[300px];
 }
 
-.rich-text-editor .ProseMirror p {
-  @apply mb-4 text-gray-800 leading-relaxed;
-}
-
-.rich-text-editor .ProseMirror h1 {
-  @apply text-4xl font-bold mb-4 mt-6 text-gray-900;
-}
-
-.rich-text-editor .ProseMirror h2 {
-  @apply text-3xl font-bold mb-3 mt-5 text-gray-900;
-}
-
-.rich-text-editor .ProseMirror h3 {
-  @apply text-2xl font-bold mb-3 mt-4 text-gray-900;
-}
-
-.rich-text-editor .ProseMirror ul,
-.rich-text-editor .ProseMirror ol {
-  @apply pl-6 mb-4 space-y-2;
-}
-
-.rich-text-editor .ProseMirror ul {
-  @apply list-disc;
-}
-
-.rich-text-editor .ProseMirror ol {
-  @apply list-decimal;
-}
-
-.rich-text-editor .ProseMirror li {
-  @apply text-gray-800;
-}
-
-.rich-text-editor .ProseMirror blockquote {
-  @apply border-l-4 border-primary pl-4 italic text-gray-700 my-4;
-}
-
-.rich-text-editor .ProseMirror code {
-  @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono text-primary;
-}
-
-.rich-text-editor .ProseMirror pre {
-  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-4;
-}
-
-.rich-text-editor .ProseMirror pre code {
-  @apply bg-transparent text-gray-100 p-0;
-}
-
-.rich-text-editor .ProseMirror img {
-  @apply max-w-full h-auto rounded-lg my-4 shadow-md;
-}
-
-.rich-text-editor .ProseMirror a {
-  @apply text-primary underline hover:text-primary-light transition-colors;
-}
-
 .rich-text-editor .ProseMirror p.is-editor-empty:first-child::before {
   @apply text-gray-400;
   content: attr(data-placeholder);
